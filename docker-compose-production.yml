@@ -39,6 +39,7 @@ services:
         deploy:
             placement:
                 constraints: [node.role == manager]
+            endpoint_mode: dnsrr
 
 volumes:
     mongodata:
