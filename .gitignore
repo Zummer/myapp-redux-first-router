@@ -4,3 +4,4 @@ node_modules
 /*-lock.json
 .npm-ready
 out
+.env
