@@ -5,7 +5,7 @@ services:
             context: gateway/docker
             dockerfile: development/nginx/Dockerfile
         ports:
-            - "3000:80"
+            - "${GATEWAY_PORT:-3000}:80"
     static:
         build:
             context: static/docker
