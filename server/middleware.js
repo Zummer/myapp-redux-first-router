@@ -2,9 +2,11 @@ const {findVideos, findVideo} = require('./api');
 const path = require('path');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
-const router = new Router();
+const router = new Router({prefix: '/api'});
 const importFresh = require('import-fresh');
-const {login, health, register} = require('./controllers');
+const {login} = require('./controllers/login');
+const {health} = require('./controllers/health');
+const {register} = require('./controllers/registration');
 
 const mongoose = require('mongoose');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
@@ -24,7 +26,6 @@ const handleMongooseValidationError = require('./libs/validationErrors');
 function middleware(app) {
   mongoose.connect(config.mongodb.uri);
 
-  // почему production-rfr?
   console.log('config.mongodb.uri', config.mongodb.uri);
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
@@ -53,23 +54,23 @@ function middleware(app) {
   router.post('/register', handleMongooseValidationError, register);
   router.get('/health', health);
 
-  router.get('/api/videos/:category', async (ctx, next) => {
+  router.get('/videos/:category', async (ctx, next) => {
     const jwToken = 'fake';
     const data = await findVideos(ctx.params.category, jwToken);
     ctx.body = data;
-
-    await next();
   });
 
-  router.get('/api/video/:slug', async (ctx, next) => {
+  router.get('/video/:slug', async (ctx, next) => {
     const jwToken = 'fake';
     const data = await findVideo(ctx.params.slug, jwToken);
     ctx.body = data;
-
-    await next();
   });
 
   app.use(async (ctx, next) => {
+    if (ctx.path.indexOf('api') !== -1) {
+      return next();
+    }
+
     const clientStats = importFresh(
       path.resolve(__dirname, '../out/buildServer/stats.json')
     );

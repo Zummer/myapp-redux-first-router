@@ -5,9 +5,9 @@ dc ?= docker-compose.yml
 init: docker-down-clear go
 
 # Запуск докера без удаления volumes
-v-init: docker-down go
+init-not-full: docker-down go
 
-go: clear \
+go: build-clear npm-ready-clear \
 	docker-pull docker-build \
 	node-init \
 	docker-up
@@ -16,13 +16,12 @@ up: docker-up
 down: docker-down
 restart: down up
 
-clear: npm-ready-clear build-clear
+node-init: npm-install npm-ready
 
-node-modules-mkdir:
-	mkdir -p node_modules
-
-node-init: node-modules-mkdir npm-install npm-ready
 npm-ready-clear:
+	docker run --rm -v ${PWD}:/app -w /app alpine sh -c 'rm -rf .npm-ready'
+
+npm-clear:
 	docker run --rm -v ${PWD}:/app -w /app alpine sh -c 'rm -rf .npm-ready node_modules'
 
 build-ready:
