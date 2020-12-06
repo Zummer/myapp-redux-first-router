@@ -1,8 +1,9 @@
 import React from 'react';
-import {spinner} from '../css/Switcher';
+//@ts-ignore
+import style from '../css/Switcher.css';
 
 const Loading = () => (
-  <div className={spinner}>
+  <div className={style.spinner}>
     <div />
   </div>
 );

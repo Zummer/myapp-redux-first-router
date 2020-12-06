@@ -7,18 +7,20 @@ import options from './options';
 import * as reducers from './reducers';
 import * as actionCreators from './actions';
 
-export default (preLoadedState, initialEntries) => {
+export default (preLoadedState, initialEntries?: any) => {
   const {reducer, middleware, enhancer, thunk} = connectRoutes(routesMap, {
     ...options,
     initialEntries,
   });
 
-  const rootReducer = combineReducers({...reducers, location: reducer});
+  const rootReducer: any = combineReducers({...reducers, location: reducer});
   const middlewares = applyMiddleware(middleware);
-  const enhancers = composeEnhancers(enhancer, middlewares);
+  const enhancers: any = composeEnhancers(enhancer, middlewares);
   const store = createStore(rootReducer, preLoadedState, enhancers);
 
+  //@ts-ignore
   if (module.hot && process.env.NODE_ENV === 'development') {
+    //@ts-ignore
     module.hot.accept('./reducers/index', () => {
       const reducers = require('./reducers/index');
       const rootReducer = combineReducers({...reducers, location: reducer});
