@@ -1,0 +1,23 @@
+{
+  "ts-node": {
+    // these options are overrides used only by ts-node
+    // same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./out",
+    "allowJs": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "sourceMap": true,
+    "target": "ES5",
+    "module": "esnext",
+    "moduleResolution": "Node"
+  },
+  "include": ["src", "server"]
+}

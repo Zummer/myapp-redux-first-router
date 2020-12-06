@@ -1,10 +1,9 @@
 import React from 'react';
-
 import DevTools from './DevTools';
 import Sidebar from './Sidebar';
 import Switcher from './Switcher';
-
-import styles from '../css/App';
+//@ts-ignore
+import styles from '../css/App.css';
 
 const App = () => (
   <div>

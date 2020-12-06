@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {NavLink} from 'redux-first-router-link';
 import {goToPage} from '../actions';
-import styles from '../css/Sidebar';
+//@ts-ignore
+import styles from '../css/Sidebar.css';
 
 const Sidebar = ({onClick, path}) => (
   <div className={styles.sidebar}>
@@ -63,11 +63,6 @@ const Sidebar = ({onClick, path}) => (
     </NavLink>
   </div>
 );
-
-Sidebar.propTypes = {
-  onClick: PropTypes.func,
-  path: PropTypes.string,
-};
 
 const active = (currentPath, path) =>
   currentPath === path ? styles.active : '';

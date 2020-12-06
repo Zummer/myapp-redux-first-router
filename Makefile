@@ -1,5 +1,5 @@
 # docker-compose filename
-dc ?= docker-compose.yml
+f ?= docker-compose.yml
 
 # Запуск докера с удалением volumes
 init: docker-down-clear go
@@ -37,26 +37,26 @@ build-clear:
 	docker run --rm -v ${PWD}:/app -w /app alpine sh -c 'rm -rf out .build-ready dist buildClient buildServer'
 
 lint: 
-	docker-compose -f ${dc} run --rm node-cli npm run eslint
-	docker-compose -f ${dc} run --rm node-cli npm run stylelint
+	docker-compose -f ${f} run --rm node-cli npm run eslint
+	docker-compose -f ${f} run --rm node-cli npm run stylelint
 
 lint-fix: 
-	docker-compose -f ${dc} run --rm node-cli npm run eslint-fix
+	docker-compose -f ${f} run --rm node-cli npm run eslint-fix
 
 docker-up:
-	docker-compose -f ${dc} up -d
+	docker-compose -f ${f} up -d
 
 docker-down:
-	docker-compose -f ${dc} down --remove-orphans
+	docker-compose -f ${f} down --remove-orphans
 
 docker-down-clear:
-	docker-compose -f ${dc} down -v --remove-orphans
+	docker-compose -f ${f} down -v --remove-orphans
 
 docker-pull:
-	docker-compose -f ${dc} pull --include-deps
+	docker-compose -f ${f} pull --include-deps
 
 docker-build:
-	docker-compose -f ${dc} build
+	docker-compose -f ${f} build
 
 build: build-clear build-prod build-gateway build-server build-static
 
@@ -70,7 +70,7 @@ build-server:
 	docker --log-level=debug build --pull --file=server/docker/production/Dockerfile --tag=${REGISTRY}/rfr-server:${IMAGE_TAG} .
 
 build-prod:
-	docker-compose -f ${dc} run --rm node-cli npm run build
+	docker-compose -f ${f} run --rm node-cli npm run build
 
 try-build:
 	REGISTRY=localhost IMAGE_TAG=0 make build
@@ -109,4 +109,4 @@ rollback:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd site_${BUILD_NUMBER} && docker stack deploy --compose-file docker-compose.yml site --with-registry-auth --prune'
 
 logs:
-	docker-compose -f ${dc} logs -t -f ${ss}
+	docker-compose -f ${f} logs -t -f ${s}
