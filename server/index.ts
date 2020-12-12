@@ -1,6 +1,5 @@
 const Koa = require('koa');
 const middleware = require('./middleware');
-require('dotenv').config();
 
 const app = new Koa();
 
