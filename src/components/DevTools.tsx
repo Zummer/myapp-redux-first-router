@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-
-import styles from '../css/DevTools';
+//@ts-ignore
+import styles from '../css/DevTools.css';
 
 const DevTools = () => (
   <div className={styles.container}>
@@ -24,10 +23,6 @@ const ActionsBoxComponent = ({actions}) => (
     <pre>{JSON.stringify(actions, null, 1)}</pre>
   </div>
 );
-
-ActionsBoxComponent.propTypes = {
-  actions: PropTypes.any,
-};
 
 const ActionsBox = connect(({actions}) => ({actions}))(ActionsBoxComponent);
 

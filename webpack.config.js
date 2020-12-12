@@ -5,13 +5,15 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const StatsPlugin = require('stats-webpack-plugin');
 const define = require('./webpack/define');
-const babelLoader = require('./webpack/babel');
+const tsLoader = require('./webpack/ts-loader');
 const servePlugin = require('./webpack/serve');
 const cssLoader = require('./webpack/cssLoader');
 const miniCssPlugin = require('./webpack/minicss');
 const {WebpackPluginServe: Serve} = require('webpack-plugin-serve');
 const WebpackShellPluginNext = require('webpack-shell-plugin-next');
 const CopyPlugin = require('copy-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 const modes = {
   HOTRELOAD: 'hotreload',
@@ -30,12 +32,13 @@ const common = merge(
     watch: !optimize,
     entry: ['fetch-everywhere'],
     resolve: {
-      extensions: ['.js', '.css'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.css'],
     },
     devtool: 'source-map',
+    plugins: [new ForkTsCheckerWebpackPlugin()],
   },
   define(mode),
-  babelLoader()
+  tsLoader()
 );
 
 // основной мульти-конфиг, но не полноценный
@@ -48,7 +51,7 @@ const baseConfig = {
     {
       name: 'client',
       target: 'web',
-      entry: [res('./src/index.js')],
+      entry: [res('./src/index.tsx')],
       output: {
         filename: '[name].js',
         chunkFilename: '[name].js',
@@ -70,6 +73,7 @@ const baseConfig = {
         },
       },
       plugins: [
+        new CleanWebpackPlugin(),
         new StatsPlugin('../buildServer/stats.json'),
         new CopyPlugin({
           patterns: [
@@ -88,13 +92,14 @@ const baseConfig = {
     {
       name: 'server',
       target: 'node',
-      entry: [res('./server/render.js')],
+      entry: [res('./server/render.tsx')],
       output: {
         filename: 'serverRender.js',
         libraryTarget: 'commonjs2',
         path: res('./out/buildServer'),
       },
       plugins: [
+        new CleanWebpackPlugin(),
         new webpack.optimize.LimitChunkCountPlugin({
           maxChunks: 1,
         }),
