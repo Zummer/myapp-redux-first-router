@@ -4,7 +4,7 @@ import styles from '../css/Home.css';
 
 const Home = () => (
   <div className={styles.home}>
-    <h1>HOME</h1>
+    <h1>HOME 123</h1>
 
     <h2>NOTE: The top set of links are real links made like this:</h2>
 
