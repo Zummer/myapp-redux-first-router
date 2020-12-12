@@ -31,7 +31,7 @@ pipeline {
         }
         stage("Push") {
             when {
-                branch "deploy"
+                branch "master"
             }
             steps {
                 withCredentials([
@@ -48,7 +48,7 @@ pipeline {
         }
         stage("Prod") {
             when {
-                branch "deploy"
+                branch "master"
             }
             steps {
                 withCredentials([
