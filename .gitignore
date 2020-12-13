@@ -5,3 +5,4 @@ node_modules
 .npm-ready
 out
 .env
+.npmrc

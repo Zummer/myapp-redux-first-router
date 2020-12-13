@@ -1,7 +1,9 @@
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension/logOnlyInProduction';
 import {connectRoutes} from 'redux-first-router';
-
+import api from './middlewares/api';
+import reduxThunk from 'redux-thunk';
+import logger from 'redux-logger';
 import routesMap from './routesMap';
 import options from './options';
 import * as reducers from './reducers';
@@ -13,9 +15,10 @@ export default (preLoadedState, initialEntries?: any) => {
     initialEntries,
   });
 
+  const middlewares = [middleware, api, reduxThunk, logger];
+
   const rootReducer: any = combineReducers({...reducers, location: reducer});
-  const middlewares = applyMiddleware(middleware);
-  const enhancers: any = composeEnhancers(enhancer, middlewares);
+  const enhancers: any = composeEnhancers(enhancer, applyMiddleware(...middlewares));
   const store = createStore(rootReducer, preLoadedState, enhancers);
 
   //@ts-ignore
