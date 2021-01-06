@@ -9,3 +9,4 @@ export {default as user} from './user';
 export {default as title} from './title';
 export {default as actions} from './actions';
 export {default as jwToken} from './jwToken';
+export {default as userRegister} from './userRegister';
