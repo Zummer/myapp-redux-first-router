@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Link from 'redux-first-router-link';
+import { IAppState } from '../Models';
 //@ts-ignore
 import styles from '../css/Video.css';
 
@@ -29,4 +30,6 @@ const youtubeBackground = (youtubeId) =>
 const youtubeIframeSrc = (youtubeId) =>
   `https://www.youtube.com/embed/${youtubeId}?playlist=${youtubeId}&autoplay=1&rel=0&theme=dark&loop=1&color=white&controls=2&autohide=1&showinfo=0`;
 
-export default connect(({playing}) => ({playing}))(Player);
+const mapStateToProps = ({playing}: IAppState) => ({playing});
+
+export default connect(mapStateToProps)(Player);

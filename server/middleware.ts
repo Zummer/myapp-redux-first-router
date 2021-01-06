@@ -1,16 +1,18 @@
-const {findVideos, findVideo} = require('./api');
-const path = require('path');
-const Router = require('koa-router');
-const bodyParser = require('koa-bodyparser');
-const router = new Router({prefix: '/api'});
-const importFresh = require('import-fresh');
-const {login} = require('./controllers/login');
-const {health} = require('./controllers/health');
-const {register} = require('./controllers/registration');
+import { findVideos, findVideo } from './api';
+import path from 'path';
+import Router from 'koa-router';
+import bodyParser from 'koa-bodyparser';
+import importFresh from 'import-fresh';
+import { login } from './controllers/login';
+import { health } from './controllers/health';
+import { register } from './controllers/registration';
+import handleMongooseValidationError from './libs/validationErrors';
 
 const mongoose = require('mongoose');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 const config = require('./config');
+
+const router = new Router({prefix: '/api'});
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -21,9 +23,7 @@ mongoose.set('debug', false);
 
 mongoose.plugin(beautifyUnique);
 
-const handleMongooseValidationError = require('./libs/validationErrors');
-
-function middleware(app) {
+export function middleware(app: any) {
   mongoose.connect(config.mongodb.uri);
 
   console.log('config.mongodb.uri', config.mongodb.uri);
@@ -76,6 +76,7 @@ function middleware(app) {
     );
     const renderer = importFresh(
       path.resolve(__dirname, '../out/buildServer/serverRender.js')
+      //@ts-ignore
     ).default;
     const render = renderer({clientStats});
     await render(ctx, next);
@@ -83,5 +84,3 @@ function middleware(app) {
 
   app.use(router.routes());
 }
-
-module.exports = middleware;

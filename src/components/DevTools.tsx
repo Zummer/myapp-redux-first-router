@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {IAppState} from '../Models';
 //@ts-ignore
 import styles from '../css/DevTools.css';
 
@@ -24,7 +25,9 @@ const ActionsBoxComponent = ({actions}) => (
   </div>
 );
 
-const ActionsBox = connect(({actions}) => ({actions}))(ActionsBoxComponent);
+const mapStateToProps = ({actions}: IAppState) => ({actions});
+
+const ActionsBox = connect(mapStateToProps)(ActionsBoxComponent);
 
 const StateBoxComponent = (state) => (
   <div className={styles.stateBox}>

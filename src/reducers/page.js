@@ -9,6 +9,7 @@ const components = {
   VIDEO: 'Video',
   ADMIN: 'Admin',
   LOGIN: 'Login',
+  REGISTER: 'Register',
   [NOT_FOUND]: 'NotFound',
 };
 

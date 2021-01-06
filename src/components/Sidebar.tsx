@@ -28,6 +28,10 @@ const Sidebar = ({onClick, path}) => (
       FP
     </NavLink>
 
+    <NavLink activeClassName={styles.active} to="/register">
+      Регистрация
+    </NavLink>
+
     <div style={{height: 20}} />
     <h2>EVENT HANDLERS</h2>
 
@@ -61,6 +65,11 @@ const Sidebar = ({onClick, path}) => (
     <NavLink to={{type: 'ADMIN'}} activeClassName={styles.active}>
       ADMIN
     </NavLink>
+
+    <NavLink to={{type: 'REGISTER'}} activeClassName={styles.active}>
+      Регистрация
+    </NavLink>
+
   </div>
 );
 

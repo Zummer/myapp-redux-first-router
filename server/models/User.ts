@@ -1,8 +1,14 @@
-const mongoose = require('mongoose');
-const crypto = require('crypto');
-const config = require('../config');
+import mongoose, { Schema, Document } from 'mongoose';
+import crypto from 'crypto';
+import config from '../config';
+const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
-const userSchema = new mongoose.Schema(
+interface IUser extends Document {
+  checkPassword: (password: string) => boolean;
+  setPassword: (password: string) => void;
+}
+
+const userSchema: Schema = new mongoose.Schema(
   {
     email: {
       type: String,
@@ -59,16 +65,19 @@ function generateSalt() {
   });
 }
 
-userSchema.methods.setPassword = async function setPassword(password) {
+userSchema.methods.setPassword = async function setPassword(password: string) {
   this.salt = await generateSalt();
   this.passwordHash = await generatePassword(this.salt, password);
 };
 
-userSchema.methods.checkPassword = async function (password) {
+userSchema.methods.checkPassword = async function (password: string) {
   if (!password) return false;
 
   const hash = await generatePassword(this.salt, password);
   return hash === this.passwordHash;
 };
 
-module.exports = mongoose.model('User', userSchema);
+// Enable beautifying on this schema
+userSchema.plugin(beautifyUnique);
+
+export const User = mongoose.model<IUser>('User', userSchema);

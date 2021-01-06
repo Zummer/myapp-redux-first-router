@@ -1,4 +1,4 @@
-import {redirect, NOT_FOUND} from 'redux-first-router';
+import {redirect} from 'redux-first-router';
 import {getVideoActionCreator} from './actions';
 
 export default {
@@ -18,16 +18,7 @@ export default {
                 return;
             }
 
-            try {
-                const action = await dispatch(getVideoActionCreator(category, jwToken));
-                const videos = action.payload && action.payload.response;
-
-                if (videos && videos.length === 0) {
-                    return dispatch({type: NOT_FOUND});
-                }
-            } catch (err) {
-                console.log(err);
-            }
+            dispatch(getVideoActionCreator(category, jwToken));
         },
     },
     VIDEO: {
@@ -58,6 +49,7 @@ export default {
         path: '/admin', // TRY: visit this path or dispatch ADMIN
         role: 'admin', // + change jwToken to 'real' in server/index.js
     },
+    REGISTER: '/register',    
 };
 
 // DON'T GO DOWN THERE!

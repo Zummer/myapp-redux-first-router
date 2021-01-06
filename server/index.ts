@@ -1,5 +1,5 @@
-const Koa = require('koa');
-const middleware = require('./middleware');
+import Koa from 'koa';
+import {middleware} from './middleware';
 
 const app = new Koa();
 
