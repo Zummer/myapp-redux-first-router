@@ -15,7 +15,6 @@ export const register = async (ctx, next) => {
       displayName: ctx.request.body.displayName,
     });
   
-    //@ts-ignore
     await user.setPassword(ctx.request.body.password);
     await user.save();
   
