@@ -1,7 +1,46 @@
 import React from 'react';
-//@ts-ignore
-import style from '../css/Switcher.css';
+import {connect} from 'react-redux';
+import {LoginForm} from './LoginForm';
+import {login, setFormErrors} from '../actions/login';
+import {addFlashMessage} from '../actions/flashMessages';
+import {IAppState, IFlashMessage, ILoginParams} from '../Models';
+import {AnyAction} from 'redux';
+import Loading from './Loading';
 
-const Login = () => <div className={style.login}>YOU ARE NOT ALLOWED IN!</div>;
+interface IStateProps {
+  errors: any;
+  isLoading: boolean;
+}
 
-export default Login;
+interface IDispatchProps {
+  addFlashMessage: (message: IFlashMessage) => AnyAction;
+  setFormErrors: (errors: any) => AnyAction;
+  login: (params: ILoginParams) => Promise<void>;
+}
+
+type TProps = IStateProps & IDispatchProps;
+
+const Login: React.FunctionComponent<TProps> = (props: TProps) => {
+  return (
+    <div className="registerPage">
+      {props.isLoading && <Loading />}
+      <div className="col-md-4 col-md-offset-4">
+        <LoginForm {...props} />
+      </div>
+    </div>
+  );
+};
+
+const mapStateToProps = (state: IAppState): IStateProps => {
+  const {errors, isLoading} = state.login;
+  return {
+    errors,
+    isLoading,
+  };
+};
+
+export default connect(mapStateToProps, {
+  login,
+  setFormErrors,
+  addFlashMessage,
+})(Login);

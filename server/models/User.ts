@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, {Schema, Document} from 'mongoose';
 import crypto from 'crypto';
 import config from '../config';
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
@@ -65,12 +65,16 @@ function generateSalt(): Promise<string> {
   });
 }
 
-userSchema.methods.setPassword = async function setPassword(password: string): Promise<void> {
+userSchema.methods.setPassword = async function setPassword(
+  password: string
+): Promise<void> {
   this.salt = await generateSalt();
   this.passwordHash = await generatePassword(this.salt, password);
 };
 
-userSchema.methods.checkPassword = async function (password: string): Promise<boolean> {
+userSchema.methods.checkPassword = async function (
+  password: string
+): Promise<boolean> {
   if (!password) return false;
 
   const hash = await generatePassword(this.salt, password);

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Link from 'redux-first-router-link';
-import { IAppState } from '../Models';
+import {IAppState} from '../Models';
 //@ts-ignore
 import styles from '../css/Video.css';
 

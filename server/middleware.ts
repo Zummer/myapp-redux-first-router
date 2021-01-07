@@ -1,11 +1,11 @@
-import { findVideos, findVideo } from './api';
+import {findVideos, findVideo} from './api';
 import path from 'path';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import importFresh from 'import-fresh';
-import { login } from './controllers/login';
-import { health } from './controllers/health';
-import { register } from './controllers/registration';
+import {login} from './controllers/login';
+import {health} from './controllers/health';
+import {register} from './controllers/registration';
 import handleMongooseValidationError from './libs/validationErrors';
 
 const mongoose = require('mongoose');

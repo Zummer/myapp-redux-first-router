@@ -18,7 +18,10 @@ export default (preLoadedState, initialEntries?: any) => {
   const middlewares = [middleware, api, reduxThunk, logger];
 
   const rootReducer: any = combineReducers({...reducers, location: reducer});
-  const enhancers: any = composeEnhancers(enhancer, applyMiddleware(...middlewares));
+  const enhancers: any = composeEnhancers(
+    enhancer,
+    applyMiddleware(...middlewares)
+  );
   const store = createStore(rootReducer, preLoadedState, enhancers);
 
   //@ts-ignore
