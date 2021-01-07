@@ -1,17 +1,20 @@
-import { debounce } from 'lodash';
+import {debounce} from 'lodash';
 import React from 'react';
-import { AnyAction, Dispatch } from 'redux';
-import { validateInput } from '../../server/shared/validations/register';
-import {IUserRegisterParams} from '../Models';
-import { TextFieldGroup } from './TextFieldGroup';
+import {AnyAction} from 'redux';
+import {EFlashMessageType} from '../Enums';
+import {validateInput} from '../../server/shared/validations/register';
+import {IFlashMessage, IUserRegisterParams} from '../Models';
+import {TextFieldGroup} from './TextFieldGroup';
+import {v4 as uuid} from 'uuid';
 
 interface IState {
     data: IUserRegisterParams;
 }
 
 interface IProps {
-    setErrors: (errors: any) => AnyAction;
-    onRegister: (params: IUserRegisterParams) => Promise<void>;
+    addFlashMessage: (message: IFlashMessage) => AnyAction;
+    setFormErrors: (errors: any) => AnyAction;
+    userRegisterRequest: (params: IUserRegisterParams) => Promise<void>;
     isLoading: boolean;
     errors: any;
 }
@@ -27,12 +30,10 @@ export class RegisterForm extends React.Component<IProps, IState>{
     };
 
     componentWillUnmount() {
-        this.props.setErrors(null);
+        this.props.setFormErrors(null);
     }
 
-    setErrors = debounce((errors) => {
-        this.props.setErrors(errors);
-    }, 300);
+    setErrorsDebounce = debounce(this.props.setFormErrors, 300);
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -54,23 +55,28 @@ export class RegisterForm extends React.Component<IProps, IState>{
             Object.keys(errors).filter(key => name !== key).forEach(key => {
                 nextErrors[key] = errors[key];
             });
-            this.setErrors(nextErrors);
+            this.setErrorsDebounce(nextErrors);
         }
     }
 
     isValid = () => {
-        const {setErrors} = this.props;
+        const {setFormErrors, addFlashMessage} = this.props;
         const {errors, isValid} = validateInput(this.state.data);
 
         if (!isValid) {
-            setErrors(errors);
+            setFormErrors(errors);
+            addFlashMessage({
+                id: uuid(),
+                type: EFlashMessageType.ERROR,
+                text: 'Регистрация не получилась!',
+            });
         }
 
         return isValid;
     }
 
     handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        const {onRegister} = this.props; 
+        const {userRegisterRequest: onRegister} = this.props; 
         e.preventDefault(); // важно отменить действие по-умолчанию: перезагрузка страницы
 
         if (this.isValid()) {

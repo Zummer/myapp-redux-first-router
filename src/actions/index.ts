@@ -11,8 +11,10 @@ import {
   SET_USER_REGISTER_FORM_ERRORS,
 } from '../types';
 import {IUserRegisterParams} from '../Models';
-import { AnyAction, Dispatch } from 'redux';
-import { ERequestActionStatus } from '../Enums';
+import {AnyAction, Dispatch} from 'redux';
+import {EFlashMessageType, ERequestActionStatus} from '../Enums';
+import {addFlashMessage} from './flashMessages';
+import {v4 as uuid} from 'uuid';
 
 export const setFormErrors = (errors: any): AnyAction => ({
   type: SET_USER_REGISTER_FORM_ERRORS,
@@ -33,9 +35,26 @@ export const userRegisterRequest = (userRegisterParams: IUserRegisterParams) => 
       },
     });
 
-    if (action.status === ERequestActionStatus.SUCCESS) {
-      dispatch(goHome())
+    switch (action.status) {
+      case ERequestActionStatus.SUCCESS:
+        dispatch(goHome());
+        addFlashMessage({
+          id: uuid(),
+          type: EFlashMessageType.SUCCESS,
+          text: 'Вы успешно зарегистрировались!',
+        })(dispatch);
+        break;
+      case ERequestActionStatus.FAIL:
+        addFlashMessage({
+          id: uuid(),
+          type: EFlashMessageType.ERROR,
+          text: 'Регистрация не получилась!',
+        })(dispatch);
+        break;
+      default:
+        break;
     }
+
   } catch (error) {
     console.log(error);
   }

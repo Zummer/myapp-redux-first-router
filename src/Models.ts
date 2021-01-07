@@ -1,4 +1,4 @@
-import { ERequestActionStatus } from "./Enums";
+import { EFlashMessageType, ERequestActionStatus } from "./Enums";
 
 export interface IUserRegisterParams {
     email: string;
@@ -29,4 +29,11 @@ export interface IAppState {
     userRegister: IBaseState;
     actions: any;
     playing: any;
+    flashMessages: any;
+}
+
+export interface IFlashMessage {
+    id: string;
+    type: EFlashMessageType;
+    text: string;
 }
