@@ -1,4 +1,3 @@
-import { ERequestActionStatus } from '../Enums';
 import { IActionWith, IBaseState } from '../Models';
 import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAILURE, SET_USER_REGISTER_FORM_ERRORS } from '../types/index';
 

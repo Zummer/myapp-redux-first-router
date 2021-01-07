@@ -3,3 +3,8 @@ export enum ERequestActionStatus {
     SUCCESS = 'SUCCESS',
     FAIL = 'FAIL',
 }
+
+export enum EFlashMessageType {
+    SUCCESS = 'success',
+    ERROR = 'error',
+}

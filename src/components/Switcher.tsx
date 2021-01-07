@@ -4,16 +4,17 @@ import isLoading from '../selectors/isLoading';
 import UniversalComponent from './UniversalComponent';
 //@ts-ignore
 import styles from '../css/Switcher.css';
+import FlashMessagesList from './FlashMessagesList';
 
-const Switcher = ({page, direction, isLoading}) => (
+const Switcher = ({page, isLoading}) => (
   <div className={`${styles.switcher}`}>
+    <FlashMessagesList />
     <UniversalComponent page={page} isLoading={isLoading} />
   </div>
 );
 
-const mapState = ({page, direction, ...state}) => ({
+const mapState = ({page, ...state}) => ({
   page,
-  direction,
   isLoading: isLoading(state),
 });
 
