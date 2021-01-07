@@ -4,8 +4,8 @@ import config from '../config';
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 interface IUser extends Document {
-  checkPassword: (password: string) => boolean;
-  setPassword: (password: string) => void;
+  checkPassword: (password: string) => Promise<boolean>;
+  setPassword: (password: string) => Promise<void>;
 }
 
 const userSchema: Schema = new mongoose.Schema(
@@ -40,7 +40,7 @@ const userSchema: Schema = new mongoose.Schema(
   }
 );
 
-function generatePassword(salt, password) {
+function generatePassword(salt: string, password: string): Promise<string> {
   return new Promise((resolve, reject) => {
     crypto.pbkdf2(
       password,
@@ -56,7 +56,7 @@ function generatePassword(salt, password) {
   });
 }
 
-function generateSalt() {
+function generateSalt(): Promise<string> {
   return new Promise((resolve, reject) => {
     crypto.randomBytes(config.crypto.length, (err, buffer) => {
       if (err) return reject(err);
@@ -65,12 +65,12 @@ function generateSalt() {
   });
 }
 
-userSchema.methods.setPassword = async function setPassword(password: string) {
+userSchema.methods.setPassword = async function setPassword(password: string): Promise<void> {
   this.salt = await generateSalt();
   this.passwordHash = await generatePassword(this.salt, password);
 };
 
-userSchema.methods.checkPassword = async function (password: string) {
+userSchema.methods.checkPassword = async function (password: string): Promise<boolean> {
   if (!password) return false;
 
   const hash = await generatePassword(this.salt, password);
