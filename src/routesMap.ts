@@ -2,54 +2,54 @@ import {redirect} from 'redux-first-router';
 import {getVideoActionCreator} from './actions';
 
 export default {
-    HOME: '/',
-    LIST: {
-        path: '/list/:category',
-        thunk: async (dispatch, getState) => {
-            const {
-                jwToken,
-                location: {
-                    payload: {category},
-                },
-                videosByCategory,
-            } = getState();
-
-            if (videosByCategory[category]) {
-                return;
-            }
-
-            dispatch(getVideoActionCreator(category, jwToken));
+  HOME: '/',
+  LIST: {
+    path: '/list/:category',
+    thunk: async (dispatch, getState) => {
+      const {
+        jwToken,
+        location: {
+          payload: {category},
         },
-    },
-    VIDEO: {
-        path: '/video/:slug',
-        thunk: async (dispatch, getState) => {
-            // TASK FOR YOU. YES, YOU!
-            //
-            // visit a VIDEO page in the app, then refresh the page, then make
-            // this work when visited directly by copying the LIST route above and
-            // using fetchData(`/api/video/${slug}`) and by dispatching
-            // the the corresponding action type which I'll leave up to you to find
-            // in ../reducers/index.js :)
-        },
-    },
-    PLAY: {
-        path: '/video/:slug/play',
-        thunk: (dispatch, getState) => {
-            if (typeof window === 'undefined') {
-                const {slug} = getState().location.payload;
-                const action = redirect({type: 'VIDEO', payload: {slug}});
+        videosByCategory,
+      } = getState();
 
-                dispatch(action);
-            }
-        },
+      if (videosByCategory[category]) {
+        return;
+      }
+
+      dispatch(getVideoActionCreator(category, jwToken));
     },
-    LOGIN: '/login',
-    ADMIN: {
-        path: '/admin', // TRY: visit this path or dispatch ADMIN
-        role: 'admin', // + change jwToken to 'real' in server/index.js
+  },
+  VIDEO: {
+    path: '/video/:slug',
+    thunk: async (dispatch, getState) => {
+      // TASK FOR YOU. YES, YOU!
+      //
+      // visit a VIDEO page in the app, then refresh the page, then make
+      // this work when visited directly by copying the LIST route above and
+      // using fetchData(`/api/video/${slug}`) and by dispatching
+      // the the corresponding action type which I'll leave up to you to find
+      // in ../reducers/index.js :)
     },
-    REGISTER: '/register',    
+  },
+  PLAY: {
+    path: '/video/:slug/play',
+    thunk: (dispatch, getState) => {
+      if (typeof window === 'undefined') {
+        const {slug} = getState().location.payload;
+        const action = redirect({type: 'VIDEO', payload: {slug}});
+
+        dispatch(action);
+      }
+    },
+  },
+  LOGIN: '/login',
+  ADMIN: {
+    path: '/admin', // TRY: visit this path or dispatch ADMIN
+    role: 'admin', // + change jwToken to 'real' in server/index.js
+  },
+  REGISTER: '/register',
 };
 
 // DON'T GO DOWN THERE!

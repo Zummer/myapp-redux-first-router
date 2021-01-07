@@ -1,10 +1,10 @@
-import {isEmpty, isEqual} from 'lodash';
-import {IUserRegisterParams} from 'src/Models';
+import {isEmpty} from 'lodash';
+import {ILoginParams, IValidationResult} from 'src/Models';
 import Validator from 'validator';
 
-export function validateInput(data: IUserRegisterParams) {
+export function validateInput(data: ILoginParams): IValidationResult {
   let errors: any = {};
-  const {email, password, passwordRepeat} = data;
+  const {email} = data;
 
   Object.keys(data).forEach((key) => {
     if (isEmpty(data[key])) {
@@ -14,10 +14,6 @@ export function validateInput(data: IUserRegisterParams) {
 
   if (!errors.email && !Validator.isEmail(email)) {
     errors.email = 'Неправильный email';
-  }
-
-  if (!errors.passwordRepeat && !isEqual(password, passwordRepeat)) {
-    errors.passwordRepeat = 'Пароль должен совпадать';
   }
 
   return {

@@ -2,30 +2,28 @@ import {debounce} from 'lodash';
 import React from 'react';
 import {AnyAction} from 'redux';
 import {EFlashMessageType} from '../Enums';
-import {validateInput} from '../../server/shared/validations/register';
-import {IFlashMessage, IUserRegisterParams} from '../Models';
+import {validateInput} from 'server/shared/validations/login';
+import {IFlashMessage, ILoginParams} from '../Models';
 import {TextFieldGroup} from './TextFieldGroup';
 import {v4 as uuid} from 'uuid';
 
 interface IState {
-  data: IUserRegisterParams;
+  data: ILoginParams;
 }
 
 interface IProps {
   addFlashMessage: (message: IFlashMessage) => AnyAction;
   setFormErrors: (errors: any) => AnyAction;
-  userRegisterRequest: (params: IUserRegisterParams) => Promise<void>;
+  login: (params: ILoginParams) => Promise<void>;
   isLoading: boolean;
   errors: any;
 }
 
-export class RegisterForm extends React.Component<IProps, IState> {
+export class LoginForm extends React.Component<IProps, IState> {
   state = {
     data: {
       email: '',
-      displayName: '',
       password: '',
-      passwordRepeat: '',
     },
   };
 
@@ -70,7 +68,7 @@ export class RegisterForm extends React.Component<IProps, IState> {
       addFlashMessage({
         id: uuid(),
         type: EFlashMessageType.ERROR,
-        text: 'Регистрация не получилась!',
+        text: 'Вход не удался!',
       });
     }
 
@@ -78,22 +76,22 @@ export class RegisterForm extends React.Component<IProps, IState> {
   };
 
   handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    const {userRegisterRequest: onRegister} = this.props;
+    const {login} = this.props;
     e.preventDefault(); // важно отменить действие по-умолчанию: перезагрузка страницы
 
     if (this.isValid()) {
-      onRegister(this.state.data);
+      login(this.state.data);
     }
   };
 
   render() {
     const {data} = this.state;
     const {errors, isLoading} = this.props;
-    const {email, displayName, password, passwordRepeat} = data;
+    const {email, password} = data;
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <h1>Присоединяйтесь!</h1>
+        <h1>Вход</h1>
         <TextFieldGroup
           label="Логин (email)"
           field="email"
@@ -102,29 +100,15 @@ export class RegisterForm extends React.Component<IProps, IState> {
           error={errors?.email}
         />
         <TextFieldGroup
-          label="Имя пользователя"
-          field="displayName"
-          value={displayName}
-          onChange={this.handleChange}
-          error={errors?.displayName}
-        />
-        <TextFieldGroup
           label="Пароль"
           field="password"
           value={password}
           onChange={this.handleChange}
           error={errors?.password}
         />
-        <TextFieldGroup
-          label="Повторите пароль"
-          field="passwordRepeat"
-          value={passwordRepeat}
-          onChange={this.handleChange}
-          error={errors?.passwordRepeat}
-        />
         <div className="form-group">
           <button disabled={isLoading} className="btn btn-primary btn-large">
-            Зарегистрироваться
+            Войти
           </button>
         </div>
       </form>

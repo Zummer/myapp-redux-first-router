@@ -1,7 +1,7 @@
 import {callApi} from './callApi';
 import {CALL_API} from '../../types';
 import {IActionWith} from '../../Models';
-import { ERequestActionStatus } from '../../Enums';
+import {ERequestActionStatus} from '../../Enums';
 
 function isBrowser() {
   return typeof window !== 'undefined';

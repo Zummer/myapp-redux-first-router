@@ -1,5 +1,5 @@
 // const {v4: uuid} = require('uuid');
-import { validateInput } from '../shared/validations/register';
+import {validateInput} from '../shared/validations/register';
 import {User} from '../models/User';
 
 // const verificationToken = uuid();
@@ -14,10 +14,10 @@ export const register = async (ctx, next) => {
       email: ctx.request.body.email,
       displayName: ctx.request.body.displayName,
     });
-  
+
     await user.setPassword(ctx.request.body.password);
     await user.save();
-  
+
     ctx.body = {status: 'ok'};
   }
 };

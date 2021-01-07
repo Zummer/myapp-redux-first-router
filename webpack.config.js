@@ -33,6 +33,10 @@ const common = merge(
     entry: ['fetch-everywhere'],
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.css'],
+      alias: {
+        src: path.resolve(__dirname, 'src'),
+        server: path.resolve(__dirname, 'server'),
+      },
     },
     devtool: 'source-map',
     plugins: [new ForkTsCheckerWebpackPlugin()],
