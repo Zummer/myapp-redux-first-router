@@ -37,7 +37,6 @@ export const callApi = async (
     requestOptions.headers.Authorization = `Bearer ${token}`;
   }
 
-  // try {
   const response = await fetch(fullUrl, requestOptions);
   const data = await response.json();
 
@@ -46,9 +45,6 @@ export const callApi = async (
   } else {
     return data;
   }
-  // } catch (error) {
-  //   throw error;
-  // }
 };
 
 export default callApi;

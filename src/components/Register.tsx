@@ -1,7 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {RegisterForm} from './RegisterForm';
-import {userRegisterRequest, setUserRegisterFormErrors} from '../actions/userRegister';
+import {
+  userRegisterRequest,
+  setUserRegisterFormErrors,
+} from '../actions/userRegister';
 import {addFlashMessage} from '../actions/flashMessages';
 import {IAppState, IFlashMessage, IUserRegisterParams} from '../Models';
 import {AnyAction} from 'redux';

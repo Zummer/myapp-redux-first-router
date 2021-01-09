@@ -31,7 +31,7 @@ npm-ready:
 	docker run --rm -v ${PWD}:/app -w /app alpine touch .npm-ready
 
 npm-install:
-	docker-compose run --rm node-cli npm install
+	docker-compose run --rm node-cli npm install --legacy-peer-deps
 
 build-clear:
 	docker run --rm -v ${PWD}:/app -w /app alpine sh -c 'rm -rf out .build-ready dist buildClient buildServer'

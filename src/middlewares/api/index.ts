@@ -2,10 +2,7 @@ import {callApi} from './callApi';
 import {CALL_API} from '../../types';
 import {IActionWith} from '../../Models';
 import {ERequestActionStatus} from '../../Enums';
-
-function isBrowser() {
-  return typeof window !== 'undefined';
-}
+import {isBrowser} from 'src/utils';
 
 export default (store) => (next) => async (action) => {
   const callAPI = action[CALL_API];
@@ -29,8 +26,7 @@ export default (store) => (next) => async (action) => {
   };
 
   const [requestType, successType, failureType] = types;
-  const token =
-    (isBrowser() && localStorage.jwtToken) || (payload && payload.jwToken);
+  const token = isBrowser() && localStorage.jwtToken; // || (payload && payload.jwToken);
 
   next(
     actionWith({

@@ -8,6 +8,10 @@ import routesMap from './routesMap';
 import options from './options';
 import * as reducers from './reducers';
 import * as actionCreators from './actions';
+import jwtDecode from 'jwt-decode';
+import {IAppUser} from './Models';
+import {loggedIn} from './actions/login';
+import {isBrowser} from './utils';
 
 export default (preLoadedState, initialEntries?: any) => {
   const {reducer, middleware, enhancer, thunk} = connectRoutes(routesMap, {
@@ -23,6 +27,12 @@ export default (preLoadedState, initialEntries?: any) => {
     applyMiddleware(...middlewares)
   );
   const store = createStore(rootReducer, preLoadedState, enhancers);
+
+  if (isBrowser() && localStorage.jwtToken) {
+    const user = jwtDecode<IAppUser>(localStorage.jwtToken);
+
+    store.dispatch(loggedIn(user));
+  }
 
   //@ts-ignore
   if (module.hot && process.env.NODE_ENV === 'development') {

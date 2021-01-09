@@ -1,5 +1,5 @@
 import {AnyAction, Dispatch} from 'redux';
-import {ILoginParams} from '../Models';
+import {IAppUser, ILoginParams} from '../Models';
 import {
   CALL_API,
   CALL_API_ACTION,
@@ -7,16 +7,34 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   SET_LOGIN_FORM_ERRORS,
+  USER_LOGGED_IN,
+  USER_LOGGED_OUT,
 } from '../types';
 import {goHome} from '../actions';
 import {addFlashMessage} from './flashMessages';
 import {EFlashMessageType, ERequestActionStatus} from '../Enums';
 import {v4} from 'uuid';
+import jwtDecode from 'jwt-decode';
 
 export const setFormErrors = (errors: any): AnyAction => ({
   type: SET_LOGIN_FORM_ERRORS,
   payload: errors,
 });
+
+export function loggedIn(user: IAppUser): AnyAction {
+  return {
+    type: USER_LOGGED_IN,
+    payload: user,
+  };
+}
+
+export function logout(): AnyAction {
+  localStorage.removeItem('jwtToken');
+  document.cookie = 'jwtToken=;expires=Thu, 01 Jan 1970 00:00:00 GMT;';
+  return {
+    type: USER_LOGGED_OUT,
+  };
+}
 
 export const login = (params: ILoginParams) => async (
   dispatch: Dispatch
@@ -35,6 +53,10 @@ export const login = (params: ILoginParams) => async (
 
     switch (action.status) {
       case ERequestActionStatus.SUCCESS:
+        const jwtToken = action.payload.response.jwtToken;
+        localStorage.setItem('jwtToken', jwtToken);
+        dispatch(loggedIn(jwtDecode(jwtToken)));
+
         dispatch(goHome());
         addFlashMessage({
           id: v4(),

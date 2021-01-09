@@ -18,7 +18,8 @@ export default {
         return;
       }
 
-      dispatch(getVideoActionCreator(category, jwToken));
+      // здесь эвейт обязательный, иначе ssr не дожидается загрузки данных
+      await dispatch(getVideoActionCreator(category, jwToken));
     },
   },
   VIDEO: {
@@ -50,6 +51,10 @@ export default {
     role: 'admin', // + change jwToken to 'real' in server/index.js
   },
   REGISTER: '/register',
+  NEWEVENT: {
+    path: '/new-event',
+    role: 'user',
+  },
 };
 
 // DON'T GO DOWN THERE!

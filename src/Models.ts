@@ -30,12 +30,19 @@ export interface IBaseState {
   isLoading: boolean;
 }
 
+export interface IAuthState {
+  isAuthenticated: boolean;
+  user: IAppUser;
+}
+
 export interface IAppState {
   userRegister: IBaseState;
   actions: any;
   playing: any;
   flashMessages: any;
   login: any;
+  location: any;
+  auth: IAuthState;
 }
 
 export interface IFlashMessage {
@@ -47,4 +54,10 @@ export interface IFlashMessage {
 export interface IValidationResult {
   errors: any;
   isValid: boolean;
+}
+
+export interface IAppUser {
+  id: string;
+  username: string;
+  roles: string[];
 }

@@ -12,3 +12,4 @@ export {default as jwToken} from './jwToken';
 export {default as userRegister} from './userRegister';
 export {default as flashMessages} from './flashMessages';
 export {default as login} from './login';
+export {default as auth} from './auth';

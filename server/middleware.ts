@@ -3,14 +3,13 @@ import path from 'path';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import importFresh from 'import-fresh';
-import {login} from './controllers/login';
-import {health} from './controllers/health';
-import {register} from './controllers/registration';
+import {login, health, register, events} from './controllers';
 import handleMongooseValidationError from './libs/validationErrors';
+import {authenticate} from './libs/authenticate';
 
 const mongoose = require('mongoose');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
-const config = require('./config');
+import {config} from 'server/config';
 
 const router = new Router({prefix: '/api'});
 
@@ -51,6 +50,7 @@ export function middleware(app: any) {
   });
 
   router.post('/login', login);
+  router.post('/events', authenticate, events);
   router.post('/register', handleMongooseValidationError, register);
   router.get('/health', health);
 

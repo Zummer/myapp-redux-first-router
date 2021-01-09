@@ -77,7 +77,7 @@ export class RegisterForm extends React.Component<IProps, IState> {
     return isValid;
   };
 
-  handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     const {userRegisterRequest: onRegister} = this.props;
     e.preventDefault(); // важно отменить действие по-умолчанию: перезагрузка страницы
 
