@@ -3,13 +3,14 @@ import {NOT_FOUND} from 'redux-first-router';
 export default (state = 'HOME', action = {}) =>
   components[action.type] || state;
 
-const components = {
+export const components = {
   HOME: 'Home',
   LIST: 'List',
   VIDEO: 'Video',
   ADMIN: 'Admin',
   LOGIN: 'Login',
   REGISTER: 'Register',
+  NEWEVENT: 'NewEvent',
   [NOT_FOUND]: 'NotFound',
 };
 

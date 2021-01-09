@@ -11,7 +11,7 @@ const FLASH_MESSAGE_SHOW_TIMEOUT = 5000;
  */
 export const addFlashMessage = (
   message: IFlashMessage,
-  timeout = FLASH_MESSAGE_SHOW_TIMEOUT
+  timeout: number = FLASH_MESSAGE_SHOW_TIMEOUT
 ) => (dispatch: Dispatch): void => {
   dispatch({
     type: ADD_FLASH_MESSAGE,

@@ -1,14 +1,23 @@
-import mongoose, {Schema, Document} from 'mongoose';
+import mongoose, {Schema, Document, Model} from 'mongoose';
 import crypto from 'crypto';
-import config from '../config';
+import {config} from 'server/config';
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
-interface IUser extends Document {
+export interface IUserDocument extends Document {
+  email: string;
+  passwordHash: string;
+  salt: string;
+  displayName: string;
+  roles: string[];
   checkPassword: (password: string) => Promise<boolean>;
   setPassword: (password: string) => Promise<void>;
 }
 
-const userSchema: Schema = new mongoose.Schema(
+interface IUserModel extends Model<IUserDocument> {
+  
+}
+
+const userSchema: Schema<IUserDocument> = new mongoose.Schema<IUserDocument>(
   {
     email: {
       type: String,
@@ -28,6 +37,7 @@ const userSchema: Schema = new mongoose.Schema(
       required: 'У пользователя должно быть имя',
       unique: 'Такое имя уже существует',
     },
+    roles: [String],
     passwordHash: {
       type: String,
     },
@@ -66,6 +76,7 @@ function generateSalt(): Promise<string> {
 }
 
 userSchema.methods.setPassword = async function setPassword(
+  this: IUserDocument,
   password: string
 ): Promise<void> {
   this.salt = await generateSalt();
@@ -73,6 +84,7 @@ userSchema.methods.setPassword = async function setPassword(
 };
 
 userSchema.methods.checkPassword = async function (
+  this: IUserDocument,
   password: string
 ): Promise<boolean> {
   if (!password) return false;
@@ -84,4 +96,9 @@ userSchema.methods.checkPassword = async function (
 // Enable beautifying on this schema
 userSchema.plugin(beautifyUnique);
 
-export const User = mongoose.model<IUser>('User', userSchema);
+userSchema.pre<IUserDocument>('save', function(next) {
+  const user = this;
+  next();
+}) 
+
+export const User: IUserModel = mongoose.model<IUserDocument, IUserModel>('User', userSchema);

@@ -1,4 +1,4 @@
-module.exports = {
+export const config = {
   mongodb: {
     uri:
       process.env.NODE_ENV === 'development'
@@ -10,4 +10,5 @@ module.exports = {
     length: 128,
     digest: 'sha512',
   },
+  jwtSecret: 'lalalasecret',
 };

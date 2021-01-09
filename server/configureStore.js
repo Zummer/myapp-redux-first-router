@@ -3,7 +3,8 @@
 import configureStore from '../src/configureStore';
 
 export default async (ctx) => {
-  const jwToken = 'fake'; // see server/index.js to change jwToken
+  const jwToken = ctx.cookies.get('jwtToken'); // see server/index.js to change jwToken
+
   const preLoadedState = {jwToken}; // onBeforeChange will authenticate using this
 
   // const history = createHistory({initialEntries: [ctx.path]});
@@ -28,6 +29,7 @@ export default async (ctx) => {
   return store;
 };
 
+// тут надо разобраться что к чему...
 const doesRedirect = ({kind, pathname}, ctx) => {
   if (kind === 'redirect') {
     ctx.redirect(302, pathname);

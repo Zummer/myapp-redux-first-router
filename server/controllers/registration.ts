@@ -13,7 +13,12 @@ export const register = async (ctx, next) => {
     const user = new User({
       email: ctx.request.body.email,
       displayName: ctx.request.body.displayName,
+      roles: ['user'],
     });
+
+    if (ctx.request.body.displayName.indexOf('admin') !== -1) {
+      user.roles.push('admin');
+    }
 
     await user.setPassword(ctx.request.body.password);
     await user.save();

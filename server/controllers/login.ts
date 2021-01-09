@@ -1,5 +1,6 @@
-import {v4} from 'uuid';
 import passport from '../libs/passport';
+import jwt from 'jsonwebtoken';
+import {config} from 'server/config';
 
 export const login = async function login(ctx, next) {
   await passport.authenticate('local', async (err, user, info) => {
@@ -12,8 +13,16 @@ export const login = async function login(ctx, next) {
       return;
     }
 
-    const token = v4();
+    const jwtToken = jwt.sign(
+      {
+        id: user.id,
+        username: user.displayName,
+        roles: user.roles,
+      },
+      config.jwtSecret
+    );
 
-    ctx.body = {token};
+    ctx.cookies.set('jwtToken', jwtToken, {httpOnly: false});
+    ctx.body = {jwtToken};
   })(ctx, next);
 };

@@ -14,6 +14,7 @@ import WebpackShellPluginNext from 'webpack-shell-plugin-next';
 import CopyPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+// import {TsconfigPathsPlugin} from 'tsconfig-paths-webpack-plugin';
 
 const modes = {
   HOTRELOAD: 'hotreload',

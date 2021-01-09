@@ -1,13 +1,27 @@
 import {redirect} from 'redux-first-router';
+import {v4} from 'uuid';
+import {addFlashMessage} from './actions/flashMessages';
+import {EFlashMessageType} from './Enums';
 import {isAllowed, isServer} from './utils';
 
 export default {
-  onBeforeChange: (dispatch, getState, action) => {
+  onBeforeChange: (dispatch, getState, {action}) => {
     const allowed = isAllowed(action.type, getState());
+    const {auth, page} = getState();
 
     if (!allowed) {
-      const action = redirect({type: 'LOGIN'});
+      const action = auth.isAuthenticated
+        ? redirect({type: page})
+        : redirect({type: 'LOGIN'});
       dispatch(action);
+
+      dispatch(
+        addFlashMessage({
+          id: v4(),
+          type: EFlashMessageType.ERROR,
+          text: 'У вас недостаточно прав для просмотра этой страницы!',
+        })
+      );
     }
   },
   onAfterChange: (dispatch, getState) => {
@@ -15,11 +29,16 @@ export default {
 
     if (type === 'LOGIN' && !isServer) {
       setTimeout(() => {
-        alert(alertMessage);
-      }, 1500);
+        dispatch(
+          addFlashMessage({
+            id: v4(),
+            type: EFlashMessageType.SUCCESS,
+            text: alertMessage,
+          })
+        );
+      }, 200);
     }
   },
 };
 
-const alertMessage =
-  "NICE, You're adventurous! Try changing the jwToken cookie from 'fake' to 'real' in server/index.js (and manually refresh) to access the Admin Panel. Then 'onBeforeChange' will let you in.";
+const alertMessage = 'Давайте залогинимся!';
