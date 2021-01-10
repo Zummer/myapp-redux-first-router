@@ -1,8 +1,7 @@
 import {isEmpty, isEqual} from 'lodash';
-import {IUserRegisterParams} from 'src/Models';
 import Validator from 'validator';
 
-export function validateInput(data: IUserRegisterParams) {
+export function validateInput(data: any) {
   let errors: any = {};
   const {email, password, passwordRepeat} = data;
 

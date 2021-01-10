@@ -1,6 +1,6 @@
 import passport from '../libs/passport';
 import jwt from 'jsonwebtoken';
-import {config} from 'server/config';
+import {config} from '../config';
 
 export const login = async function login(ctx, next) {
   await passport.authenticate('local', async (err, user, info) => {

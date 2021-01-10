@@ -18,11 +18,7 @@
     "target": "ES5",
     "module": "esnext",
     "moduleResolution": "Node",
-    "rootDir": ".",
-    "paths": {
-      "src/*": ["src/*"],
-      "server/*": ["server/*"]
-    }
+    "rootDir": "."
   },
   "include": ["src", "server"]
 }

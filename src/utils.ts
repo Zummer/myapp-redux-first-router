@@ -1,4 +1,4 @@
-import {config} from 'server/config';
+import {config} from '../server/config';
 import routesMap from './routesMap';
 import jwt from 'jsonwebtoken';
 // import {User} from 'server/models/User';

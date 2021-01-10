@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import {config} from 'server/config';
-import {User} from 'server/models/User';
+import {config} from '../config';
+import {User} from '../models/User';
 
 export const authenticate = async (ctx, next) => {
   const authorizationHeader = ctx.headers.authorization;

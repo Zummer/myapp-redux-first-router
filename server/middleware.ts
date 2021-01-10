@@ -9,7 +9,7 @@ import {authenticate} from './libs/authenticate';
 
 const mongoose = require('mongoose');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
-import {config} from 'server/config';
+import {config} from './config';
 
 const router = new Router({prefix: '/api'});
 

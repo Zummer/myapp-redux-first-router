@@ -2,7 +2,7 @@ import {debounce} from 'lodash';
 import React from 'react';
 import {AnyAction} from 'redux';
 import {EFlashMessageType} from '../Enums';
-import {validateInput} from 'server/shared/validations/login';
+import {validateInput} from '../../server/shared/validations/login';
 import {IFlashMessage, ILoginParams} from '../Models';
 import {TextFieldGroup} from './TextFieldGroup';
 import {v4 as uuid} from 'uuid';

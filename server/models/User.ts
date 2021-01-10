@@ -1,6 +1,6 @@
 import mongoose, {Schema, Document, Model} from 'mongoose';
 import crypto from 'crypto';
-import {config} from 'server/config';
+import {config} from '../config';
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 export interface IUserDocument extends Document {
