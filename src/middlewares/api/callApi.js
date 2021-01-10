@@ -1,7 +1,7 @@
 import queryString from 'query-string';
+import {apiRest} from '../../utils';
 
 const API_PREFIX = '/api';
-const serverUrl = 'http://localhost:3000';
 
 export const callApi = async (
   endpoint,
@@ -10,7 +10,7 @@ export const callApi = async (
   queryParams,
   requestBody
 ) => {
-  let fullUrl = serverUrl + API_PREFIX + endpoint;
+  let fullUrl = apiRest + API_PREFIX + endpoint;
 
   if (queryParams && typeof queryParams === 'object') {
     if (fullUrl.indexOf('/?') === -1) {

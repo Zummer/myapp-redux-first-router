@@ -8,6 +8,7 @@
   "scripts": {
     "start:hotreload": "NODE_ENV=hotreload ts-node ./node_modules/webpack/bin/webpack",
     "start:webpack-watch": "NODE_ENV=development ts-node ./node_modules/webpack/bin/webpack",
+    "prod-server": "NODE_ENV=production node -r ts-node/register/transpile-only server",
     "start:server": "NODE_ENV=development node_modules/.bin/nodemon --inspect=0.0.0.0 -r ts-node/register server",
     "build": "NODE_ENV=production ts-node ./node_modules/webpack/bin/webpack --progress -p",
     "precommit": "lint-staged",

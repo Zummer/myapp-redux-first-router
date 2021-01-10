@@ -9,7 +9,7 @@ const ssrRest =
   process.env.NODE_ENV === 'production'
     ? 'https://rfr.afanasiev.xyz'
     : 'http://localhost:3000';
-const apiRest = isServer ? 'http://localhost:3000' : ssrRest;
+export const apiRest = isServer ? 'http://localhost:3000' : ssrRest;
 
 export const fetchData = async (path, jwToken) =>
   fetch(`${apiRest}${path}`, {
