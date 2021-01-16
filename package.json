@@ -13,7 +13,7 @@
     "server": "NODE_ENV=development node out/server",
     "start:server": "tsc-watch --onSuccess \"npm run server\" -p server-tsconfig.json",
     "prod-webpack": "NODE_ENV=production node ./node_modules/webpack/bin/webpack --progress -p",
-    "build": "npm run prod-webpack && npm run tsc-server",
+    "build": "npm run tsc-server && npm run prod-webpack",
     "precommit": "lint-staged",
     "cm": "git-cz",
     "lint": "eslint --fix src server webpack",

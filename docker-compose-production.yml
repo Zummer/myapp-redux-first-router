@@ -10,38 +10,37 @@ services:
             - "443:443"
         deploy:
             mode: replicated
-            replicas: 1
+            replicas: 2
             update_config:
                 parallelism: 1
                 delay: 10s
             placement:
+                # на менеджере потому что тут сертификаты лежат
                 constraints: [node.role == manager]
     static:
         image: ${REGISTRY}/rfr-static:${IMAGE_TAG}
         deploy:
             mode: replicated
-            replicas: 1
+            replicas: 2
             update_config:
                 parallelism: 1
                 delay: 10s
-            placement:
-                constraints: [node.role == manager]
     myapp:
         image: ${REGISTRY}/rfr-server:${IMAGE_TAG}
         deploy:
             mode: replicated
-            replicas: 1
+            replicas: 2
             update_config:
                 parallelism: 1
                 delay: 10s
-            placement:
-                constraints: [node.role == manager]
     mongodb:
         image: mongo
         volumes: 
             - mongodata:/data/db
         deploy:
             placement:
+                # на менеджере потому что тут mongo_data сразу разместилась,
+                # когда нибудь сделаю отдельную виртуалку [node.role == db]
                 constraints: [node.role == manager]
             endpoint_mode: dnsrr
 

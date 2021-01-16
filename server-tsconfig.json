@@ -11,10 +11,8 @@
       "target": "ESnext",
       "module": "commonjs",
       "moduleResolution": "Node",
-      "skipLibCheck": true,
-      "skipDefaultLibCheck": true
+      "skipLibCheck": true
     },
-    "include": ["**/server/*"],
-    "exclude": ["**/src/*", "**/node_modules/*", "**/out/*"]
+    "include": ["server"]
   }
   

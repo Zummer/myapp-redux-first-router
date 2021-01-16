@@ -11,8 +11,7 @@
     "target": "ES5",
     "module": "esnext",
     "moduleResolution": "Node",
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true
+    "skipLibCheck": true
   },
   "include": ["src", "server"]
 }
