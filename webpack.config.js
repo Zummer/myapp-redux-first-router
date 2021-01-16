@@ -1,19 +1,19 @@
-import path from 'path';
-import externals from './webpack/externals';
-import {middleware} from './server/middleware';
-import webpack from 'webpack';
-import merge from 'webpack-merge';
-import StatsPlugin from 'stats-webpack-plugin';
-import define from './webpack/define';
-import tsLoader from './webpack/ts-loader';
-import servePlugin from './webpack/serve';
-import cssLoader from './webpack/cssLoader';
-import miniCssPlugin from './webpack/minicss';
-import {WebpackPluginServe as Serve} from 'webpack-plugin-serve';
-import WebpackShellPluginNext from 'webpack-shell-plugin-next';
-import CopyPlugin from 'copy-webpack-plugin';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+const path = require('path');
+const externals = require('./webpack/externals');
+// const {middleware} = require('./server/middleware');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const StatsPlugin = require('stats-webpack-plugin');
+const define = require('./webpack/define');
+const tsLoader = require('./webpack/ts-loader');
+// const servePlugin = require('./webpack/serve');
+const cssLoader = require('./webpack/cssLoader');
+const miniCssPlugin = require('./webpack/minicss');
+// const Serve = require('webpack-plugin-serve');
+const WebpackShellPluginNext = require('webpack-shell-plugin-next');
+const CopyPlugin = require('copy-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 // import {TsconfigPathsPlugin} from 'tsconfig-paths-webpack-plugin';
 
 const modes = {
@@ -139,33 +139,33 @@ const serverDevelopment = {
 };
 
 // мульти-конфиг для разработки
-function getDevelopmentConfig() {
-  const serve = new Serve({
-    port: 3000,
-    static: ['out/buildClient'],
-    waitForBuild: true,
-    middleware, // здесь находятся мидлвари сервера
-    client: {
-      retry: true, // этот параметр переподключает вебсокет
-    },
-  });
+// function getDevelopmentConfig() {
+//   const serve = new Serve({
+//     port: 3000,
+//     static: ['out/buildClient'],
+//     waitForBuild: true,
+//     middleware, // здесь находятся мидлвари сервера
+//     client: {
+//       retry: true, // этот параметр переподключает вебсокет
+//     },
+//   });
 
-  return {
-    client: merge(
-      {
-        entry: ['webpack-plugin-serve/client'],
-        devtool: 'source-map',
-      },
-      servePlugin(serve)
-    ),
-    server: merge(
-      {
-        devtool: 'source-map',
-      },
-      servePlugin(serve)
-    ),
-  };
-}
+//   return {
+//     client: merge(
+//       {
+//         entry: ['webpack-plugin-serve/client'],
+//         devtool: 'source-map',
+//       },
+//       servePlugin(serve)
+//     ),
+//     server: merge(
+//       {
+//         devtool: 'source-map',
+//       },
+//       servePlugin(serve)
+//     ),
+//   };
+// }
 
 // мульти-конфиг для релиза
 const productionConfig = {
@@ -199,7 +199,7 @@ function getModeConfig() {
       break;
     case modes.HOTRELOAD:
     default:
-      config = getDevelopmentConfig();
+      // config = getDevelopmentConfig();
       break;
   }
 

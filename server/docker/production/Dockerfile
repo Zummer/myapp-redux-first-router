@@ -4,10 +4,9 @@ RUN apk add --no-cache curl
 
 WORKDIR /app
 
-COPY ./server /app/server
+COPY ./out/server /app/out/server
 COPY ./out/buildServer /app/out/buildServer
 COPY package.json /app
-COPY tsconfig.json /app
 
 RUN npm install
 

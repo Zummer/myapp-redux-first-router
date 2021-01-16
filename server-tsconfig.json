@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "outDir": "./out",
+      "allowJs": true,
+      "jsx": "react",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "strict": false,
+      "sourceMap": true,
+      "target": "ESnext",
+      "module": "commonjs",
+      "moduleResolution": "Node",
+      "skipLibCheck": true,
+      "skipDefaultLibCheck": true
+    },
+    "include": ["**/server/*"],
+    "exclude": ["**/src/*", "**/node_modules/*", "**/out/*"]
+  }
+  

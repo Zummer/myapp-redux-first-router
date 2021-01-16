@@ -1,6 +1,14 @@
 import {isEmpty} from 'lodash';
-import {ILoginParams, IValidationResult} from 'src/Models';
 import Validator from 'validator';
+
+interface IValidationResult {
+  errors: any;
+  isValid: boolean;
+}
+interface ILoginParams {
+  email: string;
+  password: string;
+}
 
 export function validateInput(data: ILoginParams): IValidationResult {
   let errors: any = {};
