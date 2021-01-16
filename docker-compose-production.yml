@@ -28,7 +28,6 @@ services:
                 constraints: [node.role == manager]
     myapp:
         image: ${REGISTRY}/rfr-server:${IMAGE_TAG}
-        command: npm run prod-server
         deploy:
             mode: replicated
             replicas: 1
