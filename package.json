@@ -3,7 +3,7 @@
   "description": "Forked from Universal Redux-First Router Demo",
   "version": "0.0.1",
   "main": "server/index.js",
-  "author": "Dmitry Afanasev <dima@afanasiev.xyz>",
+  "author": "Dmitry Afanasev <afanavt@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start:hotreload": "NODE_ENV=hotreload node ./node_modules/webpack/bin/webpack",

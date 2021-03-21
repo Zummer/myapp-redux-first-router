@@ -7,7 +7,7 @@ import {IAppState, IAppUser} from './Models';
 export const isServer = typeof window === 'undefined';
 const ssrRest =
   process.env.NODE_ENV === 'production'
-    ? 'https://rfr.afanasiev.xyz'
+    ? 'https://rfr.afanasev.xyz'
     : 'http://localhost:3000';
 export const apiRest = isServer ? 'http://localhost:3000' : ssrRest;
 

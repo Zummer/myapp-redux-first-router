@@ -40,7 +40,7 @@ services:
         deploy:
             placement:
                 # на менеджере потому что тут mongo_data сразу разместилась,
-                # когда нибудь сделаю отдельную виртуалку [node.role == db]
+                # когда нибудь сделаю отдельную виртуалку [node.labels.db == db]
                 constraints: [node.role == manager]
             endpoint_mode: dnsrr
 
