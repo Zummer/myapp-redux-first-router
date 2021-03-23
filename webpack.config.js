@@ -79,7 +79,7 @@ const baseConfig = {
       },
       plugins: [
         new CleanWebpackPlugin(),
-        new StatsPlugin('../buildServer/stats.json'),
+        new StatsPlugin('../stats.json'),
         new CopyPlugin({
           patterns: [
             {

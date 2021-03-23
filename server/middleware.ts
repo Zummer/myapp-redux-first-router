@@ -72,7 +72,7 @@ export function middleware(app: any) {
     }
 
     const clientStats = importFresh(
-      path.resolve(__dirname, '../buildServer/stats.json')
+      path.resolve(__dirname, '../stats.json')
     );
     const renderer = importFresh(
       path.resolve(__dirname, '../buildServer/serverRender.js')

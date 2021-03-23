@@ -6,6 +6,8 @@ WORKDIR /app
 
 COPY ./out/server /app/out/server
 COPY ./out/buildServer /app/out/buildServer
+COPY ./out/stats.json /app/out
+
 COPY package.json /app
 
 RUN npm install
